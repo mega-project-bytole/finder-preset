@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070711">
+<title>AM Finder</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Space+Mono:wght@400;700&display=swap');
+:root{--yellow:#ffd928;--black:#101010;--white:#fff;--gray:#666;--green:#18d39e;--red:#e84b4b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3f3f3;color:var(--black);font-family:'Space Mono',monospace;min-height:100vh}body:before{display:none}a{color:inherit}.container{width:min(1100px,calc(100% - 28px));margin:auto}
+nav{height:78px;display:flex;align-items:center;justify-content:space-between;background:#111;color:#fff;border-bottom:4px solid #111;padding:0 18px;margin:0 -14px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700}.logo{width:45px;height:45px;border:4px solid #111;border-radius:12px;background:var(--yellow);color:#111;display:grid;place-items:center;box-shadow:4px 4px 0 #fff;font-size:22px}.brand small{display:block;color:var(--yellow);font-size:10px;margin-top:2px}.nav-right{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700}.pill{padding:7px 10px;border:3px solid #fff;background:#fff;color:#111;border-radius:8px}
+.hero{margin:0 -14px;text-align:left;padding:0 0 22px;background:#111}.hero .eyebrow{display:flex;align-items:center;gap:8px;width:max-content;margin:0 0 0 24px;padding:9px 12px;border:4px solid #111;border-radius:8px;background:var(--green);color:#111;font-size:11px;font-weight:700;box-shadow:4px 4px 0 #000}.spark{font-size:13px}.hero h1{margin:0;padding:28px 24px 18px;background:var(--yellow);font-family:'Patrick Hand',cursive;font-size:clamp(42px,8vw,76px);line-height:.9;letter-spacing:.5px;text-transform:uppercase;text-shadow:2px 2px 0 #fff}.gradient{background:none;color:#111;-webkit-text-fill-color:initial}.hero p{margin:0;padding:15px 24px 22px;background:var(--yellow);color:#222;font-size:13px;line-height:1.65;max-width:850px}
+.app{margin:0 18px;background:#fff;border:5px solid #111;border-radius:0;padding:0;box-shadow:9px 9px 0 #111;backdrop-filter:none}.appbar{height:58px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 15px;border-bottom:5px solid #111}.window{display:flex;gap:6px}.window i{width:10px;height:10px;border-radius:50%;background:var(--yellow);border:2px solid #fff}.appname{font-size:11px;color:#fff;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.appbody{padding:22px}.label{font-family:'Patrick Hand',cursive;font-size:18px;font-weight:700;letter-spacing:.02em;color:#111;margin:0 0 8px 0;text-transform:uppercase}.searchbox{display:flex;gap:12px}.input-wrap{position:relative;flex:1}input{width:100%;height:58px;border-radius:0;border:4px solid #111;background:#fff;color:#111;padding:0 48px 0 14px;outline:0;font-family:'Space Mono',monospace;font-size:12px;transition:.15s;box-shadow:4px 4px 0 #111}input:focus{border-color:#111;box-shadow:4px 4px 0 var(--green)}input::placeholder{color:#888}.clear{position:absolute;right:7px;top:7px;height:40px;width:38px;border:3px solid #111;border-radius:0;background:var(--yellow);color:#111;cursor:pointer;font-size:20px;font-weight:700}.clear:hover{background:var(--green)}#search{height:58px;border:4px solid #111;border-radius:0;padding:0 20px;color:#111;background:var(--green);font-family:'Space Mono',monospace;font-weight:700;cursor:pointer;box-shadow:4px 4px 0 #111;transition:.15s}#search:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 #111}#search:disabled{opacity:.6;cursor:wait}.hint{font-size:10px;color:#777;margin:12px 0 0}.status{margin-top:18px;padding:14px;border:4px solid #111;background:#f7f7f7;font-size:12px;line-height:1.6;box-shadow:4px 4px 0 #111}.status.success{background:#e8fff7}.status.error{background:#ffecec}.spinner{display:inline-block;width:15px;height:15px;border:3px solid #ddd;border-top-color:#111;border-radius:50%;vertical-align:-3px;margin-right:7px;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.stat{padding:16px;border:4px solid #111;border-radius:0;background:#fff;box-shadow:5px 5px 0 #111}.stat b{display:block;font-family:'Patrick Hand',cursive;font-size:42px;line-height:1}.stat span{display:block;color:#666;font-size:10px;margin-top:7px;text-transform:uppercase}.results{display:grid;gap:13px;margin-top:18px}.result{display:flex;align-items:center;gap:12px;padding:14px;border:4px solid #111;border-radius:0;background:#fff;box-shadow:5px 5px 0 #111;animation:rise .35s ease both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.icon{width:45px;height:45px;flex:0 0 45px;border:4px solid #111;border-radius:0;display:grid;place-items:center;background:var(--yellow);font-size:18px}.url{min-width:0;flex:1}.url small{display:block;color:#666;font-size:9px;font-weight:700;margin-bottom:5px;text-transform:uppercase}.url a{font-size:11px;color:#111;text-decoration:none;word-break:break-all}.url a:hover{text-decoration:underline}.actions{display:flex;gap:8px;align-items:center}.copy,.open-app{border:4px solid #111;background:#fff;color:#111;border-radius:0;padding:9px 11px;font-size:10px;font-weight:700;cursor:pointer;margin:0;text-decoration:none;white-space:nowrap;box-shadow:3px 3px 0 #111}.copy:hover,.open-app:hover{background:var(--yellow)}.open-app{background:var(--green)}.empty{padding:20px;text-align:center;color:#666;border:4px dashed #111;border-radius:0;font-size:11px;background:#fff;box-shadow:4px 4px 0 #111}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:28px 18px 60px}.feature{padding:17px;border:4px solid #111;background:#fff;border-radius:0;box-shadow:5px 5px 0 #111}.feature-icon{font-size:21px}.feature h3{font-family:'Patrick Hand',cursive;font-size:20px;margin:9px 0 5px;text-transform:uppercase}.feature p{font-size:10px;line-height:1.65;color:#666;margin:0}footer{text-align:center;color:#666;font-size:9px;padding-bottom:30px}
+@media(max-width:700px){.container{width:calc(100% - 14px)}nav{height:68px;margin:0 -7px;padding:0 11px}.nav-right .pill{display:none}.hero{margin:0 -7px}.hero .eyebrow{margin-left:18px}.hero h1{font-size:clamp(40px,12vw,62px);padding:25px 18px 14px}.hero p{padding:13px 18px 20px;font-size:11px}.app{margin:0 12px}.appbody{padding:16px 12px}.searchbox{flex-direction:column}#search{width:100%}.stats{grid-template-columns:1fr 1fr}.result{align-items:flex-start}.actions{flex-direction:column;align-items:stretch}.copy,.open-app{padding:9px 10px;text-align:center}.features{grid-template-columns:1fr;margin-left:12px;margin-right:12px}.brand{font-size:12px}.logo{width:40px;height:40px}.appname{font-size:9px}}
+
+/* TikTok preview - preview-only feature */
+.cupz-video-preview{display:none;margin-top:14px;border:4px solid #111;background:#fff;box-shadow:5px 5px 0 #111;padding:12px}
+.cupz-video-preview.show{display:block}
+.cupz-video-preview-title{font-family:'Space Mono',monospace;font-weight:800;font-size:13px;margin-bottom:10px}
+.cupz-video-preview-frame{position:relative;width:100%;max-width:360px;margin:0 auto;aspect-ratio:9/16;background:#f5f5f5;overflow:hidden;border:3px solid #111}
+.cupz-video-preview-frame iframe{display:block;width:100%;height:100%;border:0}
+.cupz-video-preview-msg{padding:24px 12px;text-align:center;color:#666;font-size:12px;line-height:1.6}
+
+</style>
+<style>
+
+.cupz-promo-buttons{display:flex;flex-direction:column;gap:8px;width:100%;margin:14px 0}
+.cupz-promo-btn{display:block;width:100%;box-sizing:border-box;padding:9px 12px;border:3px solid #111;background:#ffd92f;color:#111;text-decoration:none;font-weight:800;font-size:11px;text-align:center;line-height:1.25;box-shadow:4px 4px 0 #111;transition:transform .12s ease,box-shadow .12s ease}
+.cupz-promo-btn + .cupz-promo-btn{background:#fff}
+.cupz-promo-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #111}
+
+
+.cupz-donation-wrap{width:100%;max-width:1100px;margin:0 auto 18px;padding:0 18px;box-sizing:border-box}
+.cupz-donation-btn{display:block;width:100%;padding:12px 14px;border:4px solid #111;background:#18d39e;color:#111;font-family:'Space Mono',monospace;font-weight:800;font-size:12px;text-align:center;cursor:pointer;box-shadow:5px 5px 0 #111;transition:.12s}
+.cupz-donation-btn:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 #111;background:#ffd928}
+.cupz-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.72)}
+.cupz-modal.show{display:flex}
+.cupz-modal-card{position:relative;width:min(430px,100%);max-height:calc(100vh - 36px);overflow:auto;background:#fff;border:5px solid #111;box-shadow:9px 9px 0 #111;padding:20px}
+.cupz-modal-close{position:absolute;right:10px;top:10px;width:38px;height:38px;border:3px solid #111;background:#ffd928;color:#111;font-size:22px;font-weight:900;cursor:pointer}
+.cupz-modal-title{font-family:'Patrick Hand',cursive;font-size:34px;font-weight:700;text-transform:uppercase;margin:0 48px 5px 0;line-height:1}
+.cupz-modal-subtitle{font-size:10px;color:#666;line-height:1.55;margin-bottom:14px}
+.cupz-qr{display:block;width:min(100%,360px);margin:0 auto 14px;border:3px solid #111}
+.cupz-donation-done{width:100%;padding:12px 14px;border:4px solid #111;background:#18d39e;color:#111;font-family:'Space Mono',monospace;font-weight:800;font-size:11px;cursor:pointer;box-shadow:4px 4px 0 #111}
+.cupz-thanks{display:none;margin-top:12px;padding:14px;border:4px solid #111;background:#fff8c7;font-size:11px;line-height:1.6;font-weight:700;text-align:center}
+.cupz-thanks.show{display:block}
+@media(max-width:700px){.cupz-donation-wrap{padding:0 12px}.cupz-modal-card{padding:15px}.cupz-modal-title{font-size:29px}.cupz-qr{width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+<nav>
+  <a class="brand" href="#"><span class="logo">⚡</span><span>AmFinder<small style="color:#a78bfa">Cupz Project</small></span></a>
+  <div class="nav-right"><span class="pill">Preset Finder</span><span>v7.5</span></div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow"><span class="spark">✦</span> MESIN PENCARI PRESET DI TIKTOK</div>
+  <h1>PRESET ALIGHT <br><span class="gradient">MOTION FINDER</span></h1>
+  <p>Tempel link video TikTok, lalu AM Finder akan memindai caption, komentar, dan reply untuk menemukan link preset Alight Motion.</p>
+
+  <section class="app">
+    <div class="appbar">
+      <div class="window"><i></i><i></i><i></i></div>
+      <div class="appname">AM Finder Workspace</div>
+      <div style="width:32px"></div>
+    </div>
+    <div class="appbody">
+      <div class="label">LINK VIDEO TIKTOK</div>
+      <div class="searchbox">
+        <div class="input-wrap">
+          <input id="videoUrl" autocomplete="off" placeholder="https://www.tiktok.com/@creator/video/..." />
+          <button class="clear" id="clear" aria-label="Hapus">×</button>
+        </div>
+        <button id="search">✦ &nbsp; Cari Preset</button>
+      </div>
+      <div class="hint">Mendukung link TikTok pendek maupun link video standar.</div>
+      <div id="videoPreview" class="cupz-video-preview" aria-live="polite">
+        <div class="cupz-video-preview-title">▶ Preview Video TikTok</div>
+        <div id="videoPreviewFrame" class="cupz-video-preview-frame"></div>
+      </div>
+      <div id="status" class="status">Siap. Tempel link TikTok untuk mulai mencari preset.</div>
+      <div id="stats"></div>
+      <div id="captionBox" class="status" style="display:none;margin-top:10px"></div>
+      <div id="results" class="results"></div>
+    </div>
+  </section>
+</header>
+
+<section class="features">
+  <div class="feature"><div class="feature-icon">⚡</div><h3>Pencarian cepat</h3><p>Memindai caption, komentar, dan reply untuk mencari link preset secara otomatis.</p></div>
+  <div class="feature"><div class="feature-icon">◎</div><h3>Ekstraksi mendalam</h3><p>Mendeteksi link di caption, komentar, reply, data bertingkat, teks ter-escape, dan berbagai format URL.</p></div>
+  <div class="feature"><div class="feature-icon">↗</div><h3>Langsung buka di AM</h3><p>Tekan tombol Buka di AM untuk membuka link preset. Jika Alight Motion terpasang, Android biasanya akan menawarkan atau langsung meneruskan link ke aplikasi.</p></div>
+</section>
+
+<footer> @cupzstore · TikTok → Alight Motion preset finder</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function linkType(link){return /alightcreative\.com\/am\/share\//i.test(link)?"Alight Motion Share":"Alight Motion Link"}
+
+$("clear").onclick=()=>{$("videoUrl").value="";$("videoUrl").focus();$("status").className="status";$("status").textContent="Siap. Tempel link TikTok untuk mulai mencari preset.";$("stats").innerHTML="";$("results").innerHTML="";$("captionBox").style.display="none";$("captionBox").innerHTML="";hideVideoPreview()};
+
+
+const videoPreview=$("videoPreview");
+const videoPreviewFrame=$("videoPreviewFrame");
+let previewTimer=null;
+let previewRequest=0;
+
+function hideVideoPreview(){
+  if(!videoPreview) return;
+  videoPreview.classList.remove("show");
+  if(videoPreviewFrame) videoPreviewFrame.innerHTML="";
+}
+
+function showVideoPreviewMessage(message){
+  if(!videoPreview||!videoPreviewFrame)return;
+  videoPreviewFrame.innerHTML=`<div class="cupz-video-preview-msg">${escapeHtml(message)}</div>`;
+  videoPreview.classList.add("show");
+}
+
+function renderTikTokPreview(videoId){
+  if(!videoPreview||!videoPreviewFrame)return;
+  const safeId=String(videoId).replace(/[^\d]/g,"");
+  if(!safeId){showVideoPreviewMessage("Video TikTok tidak dapat dipratinjau dari link ini.");return;}
+  videoPreviewFrame.innerHTML="";
+  const iframe=document.createElement("iframe");
+  iframe.src=`https://www.tiktok.com/player/v1/${safeId}?description=1&music_info=1`;
+  iframe.title="Preview Video TikTok";
+  iframe.allow="autoplay; fullscreen";
+  iframe.setAttribute("allowfullscreen","");
+  iframe.loading="lazy";
+  iframe.referrerPolicy="strict-origin-when-cross-origin";
+  videoPreviewFrame.appendChild(iframe);
+  videoPreview.classList.add("show");
+}
+
+async function updateVideoPreview(){
+  const value=$("videoUrl").value.trim();
+  const requestId=++previewRequest;
+  if(!value){hideVideoPreview();return;}
+  if(!/tiktok\.com/i.test(value)){hideVideoPreview();return;}
+
+  // Canonical TikTok URLs can be previewed immediately.
+  const direct=value.match(/\/video\/(\d+)/i);
+  if(direct){
+    renderTikTokPreview(direct[1]);
+    return;
+  }
+
+  // Short links are resolved by the preview-only endpoint.
+  showVideoPreviewMessage("Memuat preview video...");
+  try{
+    const r=await fetch("/api/preview",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({videoUrl:value})});
+    const data=await r.json();
+    if(requestId!==previewRequest)return;
+    if(!r.ok||!data.videoId)throw new Error(data.error||"Video tidak dapat dipratinjau.");
+    renderTikTokPreview(data.videoId);
+  }catch(e){
+    if(requestId!==previewRequest)return;
+    showVideoPreviewMessage("Preview video tidak tersedia untuk link ini.");
+  }
+}
+
+$("videoUrl").addEventListener("input",()=>{
+  clearTimeout(previewTimer);
+  previewTimer=setTimeout(updateVideoPreview,350);
+});
+
+async function runSearch(){
+ const videoUrl=$("videoUrl").value.trim(),status=$("status"),results=$("results"),stats=$("stats"),captionBox=$("captionBox");
+ results.innerHTML="";stats.innerHTML="";captionBox.style.display="none";captionBox.innerHTML="";
+ if(!videoUrl){status.className="status error";status.textContent="❌ Masukkan link video TikTok terlebih dahulu.";return}
+ status.className="status";status.innerHTML='<span class="spinner"></span> Sedang memindai komentar TikTok...';$("search").disabled=true;
+ try{
+  const r=await fetch("/api/comments",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({videoUrl})});
+  const text=await r.text();let data;try{data=JSON.parse(text)}catch{throw new Error("Server mengembalikan respons bukan JSON.")}
+  if(!r.ok)throw new Error(typeof data.error==="string"?data.error:JSON.stringify(data.error??data));
+  const checked=data.commentsChecked??0,replies=data.repliesChecked??0,count=data.count??data.links?.length??0;
+  if(data.captionFound){
+    captionBox.style.display="block";
+    captionBox.innerHTML=`📝 <b>Caption TikTok</b><div style="margin-top:7px;color:#a5a5b6;white-space:pre-wrap;word-break:break-word">${escapeHtml(data.caption)}</div>`;
+  }
+  status.className="status "+(count?"success":"");
+  status.innerHTML=count?`✨ <b>${escapeHtml(data.message||"Preset ditemukan!")}</b>`:`ℹ️ <b>${escapeHtml(data.message||"Belum ada preset ditemukan.")}</b><br><span style="color:#85859a">Coba video lain yang memiliki link preset di caption, komentar, atau reply.</span>`;
+  const captionCount=data.captionLinks?.length??0;
+  const commentCount=data.commentLinks?.length??Math.max(0,count-captionCount);
+  stats.innerHTML=`<div class="stats"><div class="stat"><b>${captionCount}</b><span>preset dari caption</span></div><div class="stat"><b>${commentCount}</b><span>preset dari komentar/reply</span></div></div>`;
+  if(!data.links?.length){
+    const diag=(data.diagnostics||[]).map(x=>x?.message||x?.reason||x?.error||x?.status).filter(Boolean);
+    const detail=diag.length?`<div style="margin-top:10px;font-size:13px">Alasan dari TikTok/Apify: ${escapeHtml(String(diag[0]))}</div>`:"";
+    const resolved=data.resolvedUrl&&data.resolvedUrl!==videoUrl?`<div style="margin-top:8px;font-size:12px;color:#85859a;word-break:break-all">URL yang diproses: ${escapeHtml(data.resolvedUrl)}</div>`:"";
+    results.innerHTML=`<div class="empty">Belum ada link preset yang cocok. Coba video TikTok lain yang memiliki link Alight Motion di caption, komentar, atau reply.${detail}${resolved}</div>`;
+    return;
+  }
+  data.links.forEach((link,i)=>{
+   const row=document.createElement("div");row.className="result";row.style.animationDelay=(i*45)+"ms";
+   const fromCaption=(data.captionLinks||[]).includes(link);
+   row.innerHTML=`<div class="icon">${fromCaption?"📝":"⚡"}</div><div class="url"><small>${fromCaption?"Dari Caption TikTok":"Dari Komentar / Reply"} · ${escapeHtml(linkType(link))}</small><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link)}</a></div><div class="actions"><a class="open-app" href="${escapeHtml(link)}">Buka di AM</a><button class="copy">Salin</button></div>`;
+   row.querySelector(".copy").onclick=async()=>{try{await navigator.clipboard.writeText(link);row.querySelector(".copy").textContent="✓ Tersalin"}catch{row.querySelector(".copy").textContent="Gagal"}setTimeout(()=>row.querySelector(".copy").textContent="Salin",1300)};
+   results.appendChild(row);
+  });
+ }catch(e){status.className="status error";status.innerHTML=`❌ <b>Terjadi kesalahan</b><br><span style="color:#ff9baa">${escapeHtml(e.message||String(e))}</span>`}
+ finally{$("search").disabled=false}
+}
+$("search").onclick=runSearch;
+$("videoUrl").onkeydown=e=>{if(e.key==="Enter")runSearch()};
+</script>
+
+<div class="cupz-donation-wrap">
+  <button class="cupz-donation-btn" id="cupzDonationOpen" type="button">💝 DONASI / SUPPORT</button>
+</div>
+
+<div class="cupz-modal" id="cupzDonationModal" aria-hidden="true">
+  <div class="cupz-modal-card" role="dialog" aria-modal="true" aria-labelledby="cupzDonationTitle">
+    <button class="cupz-modal-close" id="cupzDonationClose" type="button" aria-label="Tutup">×</button>
+    <h2 class="cupz-modal-title" id="cupzDonationTitle">Donasi / Support</h2>
+    <div class="cupz-modal-subtitle">Scan QRIS di bawah untuk memberikan dukungan. Terima kasih sudah support Cupz Project ❤️</div>
+    <img class="cupz-qr" src="donasi-qris.jpg" alt="QRIS Donasi Cupz Store">
+    <button class="cupz-donation-done" id="cupzDonationDone" type="button">✅ SUDAH DONASI / SCAN</button>
+    <div class="cupz-thanks" id="cupzDonationThanks">🎉 Terima kasih!<br>Donasi / scan kamu sudah dicatat. Dukunganmu sangat berarti untuk Cupz Project ❤️</div>
+  </div>
+</div>
+
+<div class="cupz-promo-buttons">
+  <a class="cupz-promo-btn" href="https://alightmotion.cupzstore.web.id/" target="_blank" rel="noopener noreferrer">
+    Butuh Akun Premium Alight Motion? Klik Disini!
+  </a>
+  <a class="cupz-promo-btn" href="https://netflixg.cupzstore.web.id/" target="_blank" rel="noopener noreferrer">
+    Butuh Akun Netflix Gratis? Klik Disini!
+  </a>
+</div>
+
+
+<script>
+(()=>{
+ const openBtn=document.getElementById('cupzDonationOpen');
+ const modal=document.getElementById('cupzDonationModal');
+ const closeBtn=document.getElementById('cupzDonationClose');
+ const doneBtn=document.getElementById('cupzDonationDone');
+ const thanks=document.getElementById('cupzDonationThanks');
+ if(!openBtn||!modal)return;
+ function openDonation(){modal.classList.add('show');modal.setAttribute('aria-hidden','false');thanks.classList.remove('show');doneBtn.style.display='block';document.body.style.overflow='hidden'}
+ function closeDonation(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+ openBtn.addEventListener('click',openDonation);
+ closeBtn.addEventListener('click',closeDonation);
+ modal.addEventListener('click',e=>{if(e.target===modal)closeDonation()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeDonation()});
+ doneBtn.addEventListener('click',()=>{thanks.classList.add('show');doneBtn.textContent='✓ TERIMA KASIH';doneBtn.style.background='#ffd928';setTimeout(()=>{doneBtn.textContent='✅ SUDAH DONASI / SCAN'},1800)});
+
+ // Tampilkan otomatis saat pertama kali membuka website pada sesi ini.
+ // Setelah ditutup, refresh tidak akan memunculkan popup lagi pada sesi yang sama.
+ window.addEventListener('load',()=>{
+   try{
+     if(!sessionStorage.getItem('cupzDonationPopupShown')){
+       sessionStorage.setItem('cupzDonationPopupShown','1');
+       setTimeout(openDonation,450);
+     }
+   }catch(e){
+     setTimeout(openDonation,450);
+   }
+ });
+})();
+</script>
+</body>
+</html>
